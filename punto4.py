@@ -9,7 +9,9 @@ from RPLCD import CharLCD
 #abrir el archivo de texto
 with open("archivo.txt") as archivo:
 	datos = archivo.read()
+	datos.lower()
 	print(datos)
+
 
 for i in datos:
 	palabras = i.split()
