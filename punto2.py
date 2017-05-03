@@ -47,7 +47,7 @@ try:
 		lcd.write_string(mensaje)
 		if flag == 1:
 			tiempo += 1
-			time.sleep(1)
+			time.sleep(0.001)
 			print("Entro al if tiempo:" + str(tiempo))
 finally:
 	GPIO.cleanup()
