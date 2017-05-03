@@ -13,10 +13,12 @@ with open("archivo.txt") as archivo:
 	print(datos)
 
 
-for i in datos:
-	palabras = i.split()
-	if(palabras == 'hot'):
-		contador_hot =+ 1
+contador_hot = datos.count("hot")
+
+# for i in datos:
+# 	palabras = i.split()
+# 	if(palabras == 'hot'):
+# 		contador_hot =+ 1
 
 
 #punto 5
