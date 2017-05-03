@@ -1,7 +1,7 @@
 # #Import de las liberrias del BCM
 import RPi.GPIO as GPIO
 import time
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 #importlo la libreria del LCD como charLCD
 from RPLCD import CharLCD
 
@@ -26,7 +26,7 @@ def interrupcion(pulsador):
 		flag = 1
 		print ('Empieza a contar el timepo de juego') 
 		lcd.clear()
-		mensaje = 'Empieza a contar el tiempo'
+		mensaje = 'Empieza'
 	elif flag == 1:
 		global t2
 		flag = 2
@@ -34,23 +34,29 @@ def interrupcion(pulsador):
 		print(t1)
 		print ('Tiempo:' + str(t2))
 		lcd.clear()
-		mensaje = 'Termina de contar'
+		mensaje = 'Fin'
 	else:
 		print('Tu tiempo es:' + str(t2))
 		lcd.clear()
-		mensaje = 'Ya tienes tu tiempo'
-
+		mensaje = 'Terminó el juego'
 
 try:
 	GPIO.add_event_detect(pulsador, GPIO.RISING, callback=interrupcion, bouncetime=200)
-	if(t2 != 0 ):
-		tiempo_juego = 100 - |t2 - t1| / 100
-		if (tiempo_juego>95):
-			GPIO.output(13, 1) #13 es un número cualquiera, undefined alarma
-		else:
-			lcd.write_string(u'No acertaste!')
-	else:
-		lcd.write_string(mensaje)
+	while True:
+		if flag == 1:
+			tiempo += 1
+			time.sleep(0.001)
+			print("Entro al if tiempo:" + str(tiempo))
 
+		if(t2 != 0 ):
+			tiempo_juego = 100 - abs(t2 - t1) / 100
+			if (tiempo_juego>95):
+				GPIO.output(9, 1) #13 es un número cualquiera, undefined alarma
+				mensaje = 'Felicidades'
+			else:
+				mensaje = 'No acertaste'
+		lcd.cursor_pos = (0, 0)
+		lcd.write_string(mensaje)
 finally:
 	GPIO.cleanup()
+	lcd.clear()

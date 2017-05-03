@@ -46,7 +46,7 @@ try:
 		lcd.cursor_pos = (0, 0)
 		lcd.write_string(mensaje)
 		if flag == 1:
-			tiempo = tiempo + 1
+			tiempo += 1
 			time.sleep(1)
 			print("Entro al if tiempo:" + str(tiempo))
 finally:
