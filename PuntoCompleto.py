@@ -7,9 +7,11 @@ from RPLCD import CharLCD
 
 #configuracion de entrada del pulsador y de las entradas del sw  
 pulsador = 7
-entrada_1 = GPIO.setup(9,GPIO.IN)
-entrada_2 = GPIO.setup(11,GPIO.IN)
+GPIO.setup(13,GPIO.IN)
+GPIO.setup(11,GPIO.IN)
 GPIO.setup(pulsador,GPIO.IN)
+entrada_1 = 0
+entrada_2 = 0
 
 #definicion de variables
 tiempo = 0
@@ -31,6 +33,7 @@ def interrupcion(pulsador):
 	global flag_2
 	global flag_3
 	global tiempo
+	print('entro al evento e1: '+str(entrada_1)+' e2: '+str(entrada_2))
 	if entrada_1 == 0 and entrada_2 == 0:
 		#evento punto 2
 		if (flag_2 == 0):
@@ -65,6 +68,9 @@ def interrupcion(pulsador):
 try:
 	GPIO.add_event_detect(pulsador, GPIO.RISING, callback=interrupcion, bouncetime=200)
 	while True:
+		entrada_1 = GPIO.input(11)
+		entrada_2 = GPIO.input(13)
+		#print('entro al evento e1: '+str(entrada_1)+' e2: '+str(entrada_2))
 		if entrada_1 == 0 and entrada_2 == 0:
 			#punto 2
 			lcd.cursor_pos = (0, 0)
@@ -98,8 +104,8 @@ try:
 			#punto 4
 			#abrir el archivo de texto
 			with open("archivo.txt") as archivo:
-			datos = archivo.read()
-			mensaje = 'Datos almacenados'
+				datos = archivo.read()
+				mensaje = 'Datos almacenados'
 			lcd.cursor_pos = (0, 0)
 			lcd.write_string(mensaje)
 		else:
