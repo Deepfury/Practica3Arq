@@ -7,6 +7,7 @@ from RPLCD import CharLCD
 
 #configuracion de entrada del pulsador y de las entradas del sw  
 pulsador = 7
+GPIO.setup(15,GPIO.OUT)
 GPIO.setup(13,GPIO.IN)
 GPIO.setup(11,GPIO.IN)
 GPIO.setup(pulsador,GPIO.IN)
@@ -92,7 +93,7 @@ try:
 				tiempo_juego = 100 - abs(t2-t1)/100.0
 				#print('Tiempo_juego:' + str(tiempo_juego))
 				if (tiempo_juego>0.95):
-					#GPIO.output(9, 1) 
+					GPIO.output(15, 1) 
 					mensaje = 'Felicidades'
 					#break
 				else:
