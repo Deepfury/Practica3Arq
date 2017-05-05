@@ -15,7 +15,8 @@ entrada_1 = 0
 entrada_2 = 0
 
 #definicion de variables
-tiempo = 0
+tiempo_1 = 0
+tiempo_2 = 0
 flag_2 = 0
 flag_3 = 0
 t1 = 0
@@ -33,7 +34,8 @@ def interrupcion(pulsador):
 	global t2
 	global flag_2
 	global flag_3
-	global tiempo
+	global tiempo_1
+	global tiempo_2
 	print('entro al evento e1: '+str(entrada_1)+' e2: '+str(entrada_2))
 	if entrada_1 == 0 and entrada_2 == 0:
 		#evento punto 2
@@ -43,25 +45,26 @@ def interrupcion(pulsador):
 			mensaje = 'Empieza a contar el tiempo'
 		elif flag_2 == 1:
 			flag_2 = 2
-			t1 = tiempo
+			t1 = tiempo_1
 			print ('Tiempo:' + str(t1))
 			mensaje = 'Termina de contar'
-			tiempo = 0
+			#tiempo = 0
 		else:
 			print('Tu tiempo es:' + str(t1))
 			mensaje = 'Ya tienes tu tiempo'
 	elif entrada_1 == 1 and entrada_2 == 0:
+		print('Entro al evento del tercer punto')
 		#evento punto 3
 		if (flag_3 == 0):
 			flag_3 = 1
 			print ('Empieza a contar el timepo de juego') 
-			mensaje = 'Empieza'
+			mensaje = 'Empieza el juego'
 		elif flag_3 == 1:
 			flag_3 = 2
-			t2 = tiempo
+			t2 = tiempo_2
 			print(t1)
 			print ('Tiempo:' + str(t2))
-			mensaje = 'Fin'
+			mensaje = 'Fin del juego'
 		else:
 			print('Tu tiempo es:' + str(t2))
 			mensaje = 'Termino el juego'
@@ -77,22 +80,23 @@ try:
 			lcd.cursor_pos = (0, 0)
 			lcd.write_string(mensaje)
 			if flag_2 == 1:
-				tiempo += 1
+				tiempo_1 += 1
 				time.sleep(0.001)
-				print("Entro al if tiempo:" + str(tiempo))
+				print("Entro al if tiempo_1:" + str(tiempo_1))
 		elif entrada_1 == 1 and entrada_2 == 0:
 			#punto 3
 			if flag_3 == 1:
-				tiempo += 1
+				tiempo_2 += 1
 				time.sleep(0.001)
-				if(tiempo>1000):
+				if(tiempo_2>1000):
 					mensaje = 'Tiempo excedido'
 
 			if(t2 != 0 ):
+				#print('Entro al if del juego, resultado')
 				#print('t1: ' + str(t1) + ' t2: ' + str(t2))
 				tiempo_juego = 100 - abs(t2-t1)/100.0
-				#print('Tiempo_juego:' + str(tiempo_juego))
-				if (tiempo_juego>0.95):
+				print('Tiempo_juego:' + str(tiempo_juego))
+				if (tiempo_juego>95):
 					GPIO.output(15, 1) 
 					mensaje = 'Felicidades'
 					#break
